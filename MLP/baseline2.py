@@ -72,6 +72,8 @@ log_dir = os.path.join(log_root,date)
 writer = SummaryWriter(log_dir=log_dir)
 #checkpoints 保存路径
 chk_folder = os.path.join(args.chk_root,date)
+if not os.path.exists(chk_folder):
+    os.makedirs(chk_folder)
 
 step = 0
 for epoch in range(10):
@@ -148,8 +150,8 @@ for epoch in range(10):
             writer.flush()
 
         # save the checkpoint
-        chk_path = os.path.join(chk_folder,'epoch_%d.pth'%epoch)
-        torch.save(model.state_dict(),chk_path)
+    chk_path = os.path.join(chk_folder,'epoch_%d.pth'%epoch)
+    torch.save(model.state_dict(),chk_path)
 
 test_loader = torch.utils.data.DataLoader(
     dataset = MLPDataset(test_data,user_features, train=False),
@@ -177,3 +179,4 @@ test_data['watch_label'] = test_watch
 test_data['is_share'] = test_share
 
 test_data.to_csv('submission.csv', index=None)
+
