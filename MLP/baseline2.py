@@ -71,7 +71,7 @@ date = datetime.datetime.now().strftime('%F_%T').replace(':','_')
 log_dir = os.path.join(log_root,date)
 writer = SummaryWriter(log_dir=log_dir)
 #checkpoints 保存路径
-chk_folder = os.path.join(args.root,date)
+chk_folder = os.path.join(args.chk_root,date)
 
 step = 0
 for epoch in range(10):
@@ -103,7 +103,6 @@ for epoch in range(10):
         writer.add_scalar('Train/Loss', loss.item(), step)
         writer.flush()
         step += 1
-                
         if idx!=0 and idx % 1000 == 0:
             val_acc = []
             val_pred, val_label = [], []
@@ -147,9 +146,7 @@ for epoch in range(10):
             writer.add_scalar('Val/True-ACC-step', val_acc, step)
             writer.add_scalar('Val/AUC-step', score, step)
             writer.flush()
-        writer.add_scalar('Val/True-ACC-epoch', val_acc, epoch)
-        writer.add_scalar('Val/AUC-epoch', score, epoch)
-        writer.flush()
+
         # save the checkpoint
         chk_path = os.path.join(chk_folder,'epoch_%d.pth'%epoch)
         torch.save(model.state_dict(),chk_path)
