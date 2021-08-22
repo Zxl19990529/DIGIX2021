@@ -155,7 +155,7 @@ for epoch in range(10):
 
 test_loader = torch.utils.data.DataLoader(
     dataset = MLPDataset(test_data,user_features, train=False),
-    batch_size=20, shuffle=False, num_workers=args.num_wrokers,
+    batch_size=20, shuffle=False, num_workers=args.num_workers,
 )
 
 test_watch = []
