@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_path',type = str,default='/media/zxl/数据/DIGIX比赛/Dataset')
 parser.add_argument('--bts_train',type = int,default=100,help = 'The batchsize of train')
 parser.add_argument('--bts_val',type = int,default = 100,help = 'The batchsize of val')
-parser.add_argument('--num_workers',type = int,default=10,help='The number of the core for data reading')
+parser.add_argument('--num_workers',type = int,default=0,help='The number of the core for data reading')
 parser.add_argument('--log_root',type = str,default='./log',help='The root folder for saving training logs')
 parser.add_argument('--chk_root',type = str,default='./checkpoint',help='The root folder for saving checkpoints')
 args = parser.parse_args()
@@ -91,7 +91,7 @@ for epoch in range(10):
 
         optimizer.zero_grad()
         wathch_pred, share_pred = model(feed_dict_cuda)
-        loss = wathch_loss_fn(wathch_pred, watch_label) # + shaere_loss_fn(share_pred, share_label)
+        loss = wathch_loss_fn(wathch_pred, watch_label)  + shaere_loss_fn(share_pred, share_label)
 
         loss.backward()
         optimizer.step()
