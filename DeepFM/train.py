@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_path',type = str,default='/media/zxl/数据/DIGIX比赛/Dataset')
 parser.add_argument('--bts_train',type = int,default=500,help = 'The batchsize of train')
 parser.add_argument('--bts_val',type = int,default = 100,help = 'The batchsize of val')
-parser.add_argument('--num_workers',type = int,default=0,help='The number of the core for data reading')
+parser.add_argument('--num_workers',type = int,default=10,help='The number of the core for data reading')
 parser.add_argument('--log_root',type = str,default='./log',help='The root folder for saving training logs')
 parser.add_argument('--chk_root',type = str,default='./checkpoint',help='The root folder for saving checkpoints')
 parser.add_argument('--w2v',type = str,default= 'word2vec.w2v',help='The weight of Word2Vec model')
@@ -37,11 +37,11 @@ val_behavior = history_behavior[history_behavior['pt_d'] == 20210502]
 train_behavior = history_behavior[history_behavior['pt_d'] != 20210502]
 
 train_behavior = pd.concat([
-    train_behavior[train_behavior['watch_label'] == 0].sample(1000000),
+    train_behavior[train_behavior['watch_label'] == 0].sample(100000),
     train_behavior[train_behavior['watch_label'] != 0],
 ])
 val_behavior = pd.concat([
-    val_behavior[val_behavior['watch_label'] == 0].sample(1000000),
+    val_behavior[val_behavior['watch_label'] == 0].sample(100000),
     val_behavior[val_behavior['watch_label'] != 0],
 ])
 val_behavior['watch_label'].value_counts()
